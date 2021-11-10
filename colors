@@ -1,0 +1,6 @@
+[colors]
+background = #030303
+foreground = #f2ede8
+primary = #e51a01
+secondary = #e51a01
+alert = #cc0000

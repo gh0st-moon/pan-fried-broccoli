@@ -1,0 +1,505 @@
+[module/app0]
+type = custom/text
+content = %{A1:gimp:}%{A} 
+
+[module/app1]
+type = custom/text
+content = %{A1:qutebrowser:}%{A} 
+
+[module/app2]
+type = custom/text
+content = %{A1:urxvt -e ranger:}%{A} 
+
+[module/app3]
+type = custom/text
+content = %{A1:urxvt:}%{A} 
+
+[module/app4]
+type = custom/text
+content = %{A1:urxvt -e neofetch:}%{A} 
+
+[module/memory]
+type = internal/memory
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3
+; Available tags:
+;   <label> (default)
+;   <bar-used>
+;   <bar-free>
+;   <ramp-used>
+;   <ramp-free>
+;   <bar-swap-used>
+;   <bar-swap-free>
+;   <ramp-swap-used>
+;   <ramp-swap-free>
+format =  <label>
+
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+;   %percentage_swap_used%
+;   %percentage_swap_free%
+;   %mb_swap_total%
+;   %mb_swap_free%
+;   %mb_swap_used%
+;   %gb_swap_total%
+;   %gb_swap_free%
+;   %gb_swap_used%
+
+label = %percentage_used%%
+
+; Only applies if <bar-used> is used
+bar-used-indicator =
+bar-used-width = 50
+bar-used-foreground-0 = #55aa55
+bar-used-foreground-1 = #557755
+bar-used-foreground-2 = #f5a70a
+bar-used-foreground-3 = #ff5555
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+
+; Only applies if <ramp-used> is used
+ramp-used-0 = ▁
+ramp-used-1 = ▂
+ramp-used-2 = ▃
+ramp-used-3 = ▄
+ramp-used-4 = ▅
+ramp-used-5 = ▆
+ramp-used-6 = ▇
+ramp-used-7 = █
+
+; Only applies if <ramp-free> is used
+ramp-free-0 = ▁
+ramp-free-1 = ▂
+ramp-free-2 = ▃
+ramp-free-3 = ▄
+ramp-free-4 = ▅
+ramp-free-5 = ▆
+ramp-free-6 = ▇
+ramp-free-7 = █
+
+[module/cpu]
+type = internal/cpu
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 0.5
+; Available tags:
+;   <label> (default)
+;   <bar-load>
+;   <ramp-load>
+;   <ramp-coreload>
+format = <label>
+
+; Available tokens:
+;   %percentage% (default) - total cpu load averaged over all cores
+;   %percentage-sum% - Cumulative load on all cores
+;   %percentage-cores% - load percentage for each core
+;   %percentage-core[1-9]% - load percentage for specific core
+label =  %percentage%%
+
+; Spacing between individual per-core ramps
+;ramp-coreload-spacing = 1
+;ramp-coreload-0 = ▁
+;ramp-coreload-1 = ▂
+;ramp-coreload-2 = ▃
+;ramp-coreload-3 = ▄
+;ramp-coreload-4 = ▅
+;ramp-coreload-5 = ▆
+;ramp-coreload-6 = ▇
+;ramp-coreload-7 = █
+
+[fs-base]
+type = internal/fs
+fixed-values = true
+label-mounted = %used%
+
+[module/fs-root]
+inherit = fs-base
+mount-0 = /
+label-mounted =  %free%
+
+[module/network]
+type = internal/network
+; Name of the network interface to display. You can get the names of the
+; interfaces on your machine with `ip link`
+; Wireless interfaces often start with `wl` and ethernet interface with `eno` or `eth`
+interface = wlan0
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
+
+; Test connectivity every Nth update
+; A value of 0 disables the feature
+; NOTE: Experimental (needs more testing)
+; Default: 0
+;ping-interval = 3
+
+; @deprecated: Define min width using token specifiers (%downspeed:min% and %upspeed:min%)
+; Minimum output width of upload/download rate
+; Default: 3
+udspeed-minwidth = 5
+
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
+
+; Consider an `UNKNOWN` interface state as up.
+; Some devices like USB network adapters have 
+; an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
+
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = %{A1:nmcli radio wifi off:}<ramp-signal>%{A} 
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = %{A1:nmcli radio wifi on:}<label-disconnected>%{A} 
+
+
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+format-packetloss = <animation-packetloss> <label-connected>
+
+; All labels support the following tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %linkspeed% [wired]
+
+; Default: %ifname% %local_ip%
+label-connected = %essid% %downspeed:9%
+label-connected-foreground = #eefafafa
+
+; Default: (none)
+label-disconnected = 
+label-disconnected-foreground = #66ffffff
+
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+
+; Only applies if <animation-packetloss> is used
+animation-packetloss-0 = ⚠
+animation-packetloss-0-foreground = #ffa64c
+animation-packetloss-1 = 📶
+animation-packetloss-1-foreground = #000000
+; Framerate in milliseconds
+animation-packetloss-framerate = 500
+
+[module/mpd]
+type = internal/mpd
+
+; Host where mpd is running (either ip or domain name)
+; Can also be the full path to a unix socket where mpd is running.
+host = 127.0.0.1
+port = 6600
+;password = mysecretpassword
+
+; Seconds to sleep between progressbar/song timer sync
+; Default: 1
+interval = 2
+
+; Available tags:
+;   <label-song> (default)
+;   <label-time>
+;   <bar-progress>
+;   <toggle> - gets replaced with <icon-(pause|play)>
+;   <toggle-stop> - gets replaced with <icon-(stop|play)>
+;   <icon-random>
+;   <icon-repeat>
+;   <icon-repeatone> (deprecated)
+;   <icon-single> - Toggle playing only a single song. Replaces <icon-repeatone>
+;   <icon-consume>
+;   <icon-prev>
+;   <icon-stop>
+;   <icon-play>
+;   <icon-pause>
+;   <icon-next>
+;   <icon-seekb>
+;   <icon-seekf>
+format-online = <icon-prev> <toggle> <icon-next> <label-song>
+format-playing = ${self.format-online}
+format-paused = ${self.format-online}
+format-stopped = ${self.format-online}
+
+; Available tags:
+;   <label-offline>
+; Default: ""
+format-offline = <label-offline>
+
+; Available tokens:
+;   %artist%
+;   %album-artist%
+;   %album%
+;   %date%
+;   %title%
+; Default: %artist% - %title%
+label-song = %artist%//%title:0:18:...%
+label-song-maxlen = 27
+
+; Available tokens:
+;   %elapsed%
+;   %total%
+; Default: %elapsed% / %total%
+;label-time = %elapsed% / %total%
+
+; Available tokens:
+;   None
+label-offline =  mpd is offline
+
+; Only applies if <icon-X> is used
+icon-play =  
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+;icon-seekb = ⏪
+;icon-seekf = ⏩
+;icon-random = 🔀
+;icon-repeat = 🔁
+;icon-repeatone = 🔂
+;icon-single = 🔂
+;icon-consume = ✀
+
+; Used to display the state of random/repeat/repeatone/single
+; Only applies if <icon-[random|repeat|repeatone|single]> is used
+toggle-on-foreground = #ff
+toggle-off-foreground = #55
+
+; Only applies if <bar-progress> is used
+;bar-progress-width = 45
+;bar-progress-indicator = |
+;bar-progress-fill = ─
+;bar-progress-empty = ─
+
+[module/app-menu]
+type = custom/text
+
+click-left = rofi -show drun run
+content = 
+content-padding = 1
+
+[module/bspwm]
+type = internal/bspwm
+
+pin-workspaces = true
+enable-click = true
+enable-scroll = false
+reverse-scroll = false
+
+ws-icon-0 = 
+ws-icon-1 = 
+ws-icon-2 = 
+ws-icon-3 = 
+ws-icon-4 = 
+ws-icon-default = 
+
+
+label-separator-padding = 0
+label-monitor-padding = 1
+label-focused-padding = 1
+label-occupied-padding = 1
+label-urgent-padding = 1
+label-empty-padding = 1
+
+format = <label-state> <label-mode>
+label-monitor = %icon% 
+;   label-dimmed-focused
+;   label-dimmed-occupied
+;   label-dimmed-urgent
+;   label-dimmed-empty
+label-dimmed-foreground = #555
+label-dimmed-underline = ${bar/top.background}
+label-dimmed-focused-background = #f00
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon% %name%
+label-focused = 
+label-focused-foreground = #ffffff
+label-focused-background = #3f3f3f
+label-focused-underline = #fba922
+
+label-occupied = %icon%
+label-occupied-underline = #555555
+
+label-urgent = %icon%
+label-urgent-foreground = #000000
+label-urgent-background = #bd2c40
+label-urgent-underline = #9b0a20
+
+label-empty = %icon%
+label-empty-foreground = #55
+
+; Separator in between workspaces
+label-separator = .
+label-separator-foreground = #ffb52a
+
+[module/empty]
+type = custom/text
+
+content = " "
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = %{A1:urxvt -e alsamixer:}%{A3:amixer -q sset Master toggle:}<ramp-volume>%{A}%{A} 
+label-volume-foreground = ${root.foreground}
+;format-muted-prefix = ""              
+format-muted-foreground = ${colors.foreground-alt} 
+label-muted = 
+
+ramp-volume-0 =  
+ramp-volume-1 =  
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 =                       
+ramp-volume-5 =                       
+
+;bar-volume-width = 10                           
+;bar-volume-foreground-0 = ${colors.foreground-alt}
+;bar-volume-foreground-1 = ${colors.foreground-alt}
+;bar-volume-foreground-2 = ${colors.foreground}
+;bar-volume-foreground-3 = ${colors.foreground}
+;bar-volume-foreground-4 = ${colors.secondary}
+;bar-volume-foreground-5 = ${colors.secondary}
+;bar-volume-foreground-6 = ${colors.alert}
+;bar-volume-gradient = true
+;bar-volume-indicator = x
+;bar-volume-indicator-font = 2
+;bar-volume-fill = ─
+;bar-volume-fill-font = 2
+;bar-volume-empty = ─
+;bar-volume-empty-font = 2
+;bar-volume-empty-foreground = ${colors.background-alt}
+
+[module/battery]
+type = internal/battery
+
+full-at = 99
+battery = BAT1
+adapter = ACAD
+poll-interval = 5
+time-format = %H:%M
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging> 
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;format-full = <ramp-capacity>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %{T1}%percentage%%{T-}
+format-charging-suffix = "%" 
+
+label-discharging = %{T1}%percentage%%{T-}
+format-discharging-suffix = "%"
+
+label-full = 
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-4 = 
+animation-charging-3 = 
+animation-charging-2 = 
+animation-charging-1 = 
+animation-charging-0 = 
+; Framerate in milliseconds
+animation-charging-framerate = 500
+
+; Only applies if <animation-discharging> is used
+;animation-charging-0 = 
+;animation-charging-1 = 
+;animation-charging-2 = 
+;animation-charging-3 = 
+;animation-charging-4 = 
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+[module/date]
+type = internal/date
+
+; Seconds to sleep between updates
+; Default: 1.0
+interval = 1.0
+
+; See "https://en.cppreference.com/w/cpp/io/manip/put_time" for details on how to format the date string
+; NOTE: if you want to use syntax tags here you need to use %%{...}
+;date = %Y-%m-%d%
+
+; Optional time format
+time = %H:%M
+
+; if `date-alt` or `time-alt` is defined, clicking
+; the module will toggle between formats
+;date-alt = %A, %d %B %Y
+;time-alt = %H:%M:%S
+; Available tags:
+;   <label> (default)
+format =  | <label>
+format-background = ${colors.background}
+format-foreground = #fff
+format-underline = ${colors.primary}
+
+; Available tokens:
+;   %date%
+;   %time%
+; Default: %date%
+label = %time%
+label-font = 7
+label-foreground = ${colors.foreground}

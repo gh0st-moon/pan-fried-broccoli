@@ -1,0 +1,124 @@
+[bar/bar1]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 18%
+height = 35
+offset-x = 0%
+offset-y = 0%:+0
+radius = 5.0
+fixed-center = true
+locale = pt_BR.UTF-8
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #ffffff
+
+border-size = 4
+border-color = #00000000
+
+padding-left = 2
+padding-right = 5
+separator = |
+module-margin = 2
+;module-margin-right = 5
+
+font-0 = Fira Code:size=8
+font-6 = Fira Mono:style=Bold:size=13
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = siji:pixelsize=10;1
+font-3 = Font Awesome 5 Brands,Font Awesome 5 Brands Regular:style=Regular
+font-4 = Font Awesome 5 Free,Font Awesome 5 Free Solid:style=Solid
+font-5 = Font Awesome 5 Free,Font Awesome 5 Free Regular:style=Regular
+
+dpi-x = 96
+dpi-y = 96
+
+modules-left = app-menu bspwm empty 
+modules-center = 
+modules-right =  
+
+tray-position = right
+tray-padding = 2
+tray-background = ${colors.background}
+tray-foreground = ${colors.foreground}
+
+wm-restack = bspwm
+;wm-restack = i3
+
+override-redirect = true
+
+scroll-up = bspwm-desknext
+scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+;cursor-scroll = ns-resize
+
+[bar/info1]
+inherit = bar/bar1
+;offset-y = 91%:-5
+offset-x = 82%:+48
+width = 190
+
+modules-left =
+modules-center = alsa network battery 
+modules-right =
+
+override-redirect = true
+tray-position = none
+
+[bar/info2]
+inherit = bar/bar1
+offset-y = 5%:+8
+width = 290
+
+modules-left =
+modules-center = fs-root cpu memory 
+modules-right =
+
+override-redirect = true
+tray-position = none
+
+[bar/clock]
+inherit = bar/bar1
+offset-x = 74%:+24
+width = 130
+
+modules-left =
+modules-center = date
+modules-right =
+
+override-redirect = true
+tray-position = none
+
+[bar/apps]
+inherit = bar/bar1
+offset-x = 18%:+5
+width = 210
+
+module-margin = 1
+modules-left =
+modules-center = app0 app1 app2 app3 app4
+modules-right =
+
+override-redirect = true
+tray-position = none
+
+[bar/media]
+inherit = bar/bar1
+offset-x = 78%:-5
+offset-y = 5%:+8
+orverride-redirect = false
+width = 300
+
+modules-left = mpd
+modules-center = 
+modules-right = 
+tray-position = none
+
+[settings]
+include-file = ${HOME}/.config/polybar/modules
+include-file = ${HOME}/.config/polybar/colors
